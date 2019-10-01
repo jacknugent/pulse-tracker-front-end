@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import { subscribeToTimer } from "./api";
 
-function App() {
+const App = () => {
+  const [times, setTimes] = useState("loading...");
+
+  subscribeToTimer((err: any, timestamp: any) => setTimes(timestamp));
+
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+        <p>{times}</p>
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -18,6 +21,6 @@ function App() {
       </header>
     </div>
   );
-}
+};
 
 export default App;
