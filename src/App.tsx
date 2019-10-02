@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { subscribeToTimer } from "./api";
+import { subscribeToRoute } from "./api";
 
 const App = () => {
-  const [times, setTimes] = useState("loading...");
+  const [estimates, setEstimates] = useState("loading...");
 
-  subscribeToTimer((err: any, timestamp: any) => setTimes(timestamp));
+  subscribeToRoute((err: any, estimate: any) => setEstimates(estimate));
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>{times}</p>
+        <p>{estimates}</p>
         <a
           className="App-link"
           href="https://reactjs.org"

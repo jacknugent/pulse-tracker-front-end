@@ -1,8 +1,8 @@
 import openSocket from "socket.io-client";
 const socket = openSocket("http://localhost:8000");
 
-const subscribeToTimer = (cb: any) => {
-  socket.on("timer", (timestamp: any) => cb(null, timestamp));
-  socket.emit("subscribeToTimer", 1000);
+const subscribeToRoute = (cb: any) => {
+  socket.on("estimates", (estimate: any) => cb(null, estimate));
+  socket.emit("subscribeToRoute", 3504, 100);
 };
-export { subscribeToTimer };
+export { subscribeToRoute };
