@@ -1,11 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import openSocket from "socket.io-client";
 const socket = openSocket("localhost:8000");
-
-const subscribeToRoute = (cb: any, route: number) => {
-  socket.on("estimates", (estimate: any) => cb(null, estimate));
-  socket.emit("subscribeToRoute", route, 100);
-};
 
 const App = () => {
   const [estimates, setEstimates] = useState("loading...");
@@ -13,10 +8,21 @@ const App = () => {
 
   const changeSocket = (route: any) => {
     setRoute(route);
-    socket.emit("subscribeToRoute", route, 100);
   };
 
-  subscribeToRoute((err: any, estimate: any) => setEstimates(estimate), route);
+  useEffect(() => {
+    // waiting for an event
+    socket.on("estimates", (estimate: any) => setEstimates(estimate));
+
+    return () => {
+      socket.close();
+    };
+  }, []);
+
+  useEffect(() => {
+    // sending an event
+    socket.emit("subscribeToRoute", route, 100);
+  }, [route]);
 
   return (
     <div className="App">
