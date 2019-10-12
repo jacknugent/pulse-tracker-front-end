@@ -4,32 +4,31 @@ const socket = openSocket("localhost:8000");
 
 const App = () => {
   const [estimates, setEstimates] = useState("loading...");
-  const [route, setRoute] = useState(3503);
+  const [route, setRoute] = useState(3504);
 
-  const changeSocket = (route: any) => {
-    setRoute(route);
+  const changeSocket = (newRoute: any) => {
+    console.log("old route", route);
+    setRoute(previousState => {
+      socket.emit("leaveRoom", previousState);
+      socket.emit("room", newRoute);
+      return newRoute;
+    });
   };
 
   useEffect(() => {
     // waiting for an event
-    console.log("happening");
     socket.on("connect", function() {
-      socket.emit("route", 3503);
+      socket.emit("room", route);
     });
   }, []);
 
   socket.on("estimate", function(data: any) {
-    console.log(data);
+    setEstimates(data);
   });
 
-  useEffect(() => {
-    // sending an event
-    socket.emit("subscribeToRoute", route, 100);
-  }, [route]);
-
   return (
-    <div className="App">
-      <header className="App-header">
+    <div>
+      <header>
         <p>{estimates}</p>
         <select
           value={route}
