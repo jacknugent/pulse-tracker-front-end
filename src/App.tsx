@@ -23,6 +23,7 @@ const App = () => {
   }, []);
 
   socket.on("estimate", function(data: any) {
+    console.log(data);
     setEstimates(data);
   });
 
