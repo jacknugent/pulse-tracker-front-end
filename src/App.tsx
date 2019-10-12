@@ -12,12 +12,15 @@ const App = () => {
 
   useEffect(() => {
     // waiting for an event
-    socket.on("estimates", (estimate: any) => setEstimates(estimate));
-
-    return () => {
-      socket.close();
-    };
+    console.log("happening");
+    socket.on("connect", function() {
+      socket.emit("route", 3503);
+    });
   }, []);
+
+  socket.on("estimate", function(data: any) {
+    console.log(data);
+  });
 
   useEffect(() => {
     // sending an event
