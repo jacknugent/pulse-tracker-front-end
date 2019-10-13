@@ -57,7 +57,7 @@ const App = () => {
 
   useEffect(() => {
     socket.emit("room", route);
-  }, [route]);
+  }, []);
 
   socket.on("estimate", function(data: any) {
     console.log(data);
