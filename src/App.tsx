@@ -47,6 +47,7 @@ const App = () => {
   const [route, setRoute] = useState(3504);
 
   const changeSocket = (newRoute: any) => {
+    console.log("Happening");
     setRoute(previousState => {
       socket.emit("leaveRoom", previousState);
       socket.emit("room", newRoute);
