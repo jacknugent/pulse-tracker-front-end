@@ -9,6 +9,7 @@ const globalStyles = css`
   html,
   body {
     height: 100%;
+    font: helvetia sans-serrif;
   }
   #root {
     height: 100%;
@@ -48,15 +49,16 @@ const App = () => {
 
   const changeSocket = (newRoute: any) => {
     setRoute(previousState => {
-      socket.emit("leaveRoom", previousState);
-      socket.emit("room", newRoute);
+      // socket.emit("leaveRoom", previousState);
+      // socket.emit("room", newRoute);
       return newRoute;
     });
   };
 
   useEffect(() => {
-    socket.emit("room", route);
+    socket.emit("room", 3504);
     socket.on("estimate", function(data: any) {
+      console.log("data");
       if (data) {
         const stopInfo = JSON.parse(data);
         setStopName(stopInfo.stpnm);
@@ -65,7 +67,7 @@ const App = () => {
         setEstimates([]);
       }
     });
-  });
+  }, []);
 
   return (
     <Container>
