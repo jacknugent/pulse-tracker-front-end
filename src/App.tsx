@@ -47,7 +47,6 @@ const App = () => {
   const [route, setRoute] = useState(3504);
 
   const changeSocket = (newRoute: any) => {
-    console.log("Happening");
     setRoute(previousState => {
       socket.emit("leaveRoom", previousState);
       socket.emit("room", newRoute);
@@ -57,18 +56,16 @@ const App = () => {
 
   useEffect(() => {
     socket.emit("room", route);
+    socket.on("estimate", function(data: any) {
+      if (data) {
+        const stopInfo = JSON.parse(data);
+        setStopName(stopInfo.stpnm);
+        setEstimates(stopInfo.estimates);
+      } else {
+        setEstimates([]);
+      }
+    });
   }, []);
-
-  socket.on("estimate", function(data: any) {
-    console.log(data);
-    if (data) {
-      const stopInfo = JSON.parse(data);
-      setStopName(stopInfo.stpnm);
-      setEstimates(stopInfo.estimates);
-    } else {
-      setEstimates([]);
-    }
-  });
 
   return (
     <Container>
