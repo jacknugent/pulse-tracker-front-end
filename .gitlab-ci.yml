@@ -6,7 +6,6 @@ build_site:
   stage: build
   script:
     - npm install
-    - npm run clean
     - npm run build
   cache:
     key: ${CI_COMMIT_REF_SLUG}
