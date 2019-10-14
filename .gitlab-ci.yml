@@ -20,11 +20,8 @@ build_site:
 deploy_production:
   image: python:latest
   stage: deploy
-  artifacts:
-    paths:
-      - build
   script:
     - pip install awscli
-    - aws s3 sync build/ s3://pulse-realtime-api/ --delete --cache-control max-age=31557600,public
+    - aws s3 sync ./ s3://pulse-realtime-api/ --delete
   only:
     - master
