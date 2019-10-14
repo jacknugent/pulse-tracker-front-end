@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { Global, css } from "@emotion/core";
 import bus from "./utils/pulseBus.gif";
 
-const socket = openSocket("https://9195fabe.ngrok.io");
+const socket = openSocket("http://9195fabe.ngrok.io");
 
 const useWindowSize = () => {
   let [size, setSize] = useState([0, 0]);
