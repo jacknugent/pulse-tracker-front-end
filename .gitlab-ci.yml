@@ -22,6 +22,6 @@ deploy_production:
   stage: deploy
   script:
     - pip install awscli
-    - aws s3 sync ./ s3://pulse-realtime-api/ --delete
+    - aws s3 sync ./build/ s3://pulse-realtime-api/ --delete
   only:
     - master
