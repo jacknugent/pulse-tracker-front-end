@@ -8,8 +8,8 @@ const socket = openSocket("https://9195fabe.ngrok.io");
 const globalStyles = css`
   html,
   body {
-    height: 100%;
-    font: helvetia sans-serrif;
+    height: 80%;
+    font-family: helvetica;
   }
   #root {
     height: 100%;
@@ -18,14 +18,14 @@ const globalStyles = css`
 
 const Container = styled.div`
   height: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  // margin-bottom: 20vh;
 `;
 const Title = styled.h1`
   text-align: center;
-  font-size: 8vw;
+  font-size: calc(1rem + 6vw);
   margin: 0;
 `;
 
@@ -40,6 +40,7 @@ const Select = styled.select`
   display: flex;
   height: 50px;
   font-size: 20px;
+  max-width: 100%;
 `;
 
 const App = () => {
@@ -49,8 +50,8 @@ const App = () => {
 
   const changeSocket = (newRoute: any) => {
     setRoute(previousState => {
-      // socket.emit("leaveRoom", previousState);
-      // socket.emit("room", newRoute);
+      socket.emit("leaveRoom", previousState);
+      socket.emit("room", newRoute);
       return newRoute;
     });
   };
@@ -58,7 +59,6 @@ const App = () => {
   useEffect(() => {
     socket.emit("room", 3504);
     socket.on("estimate", function(data: any) {
-      console.log("data");
       if (data) {
         const stopInfo = JSON.parse(data);
         setStopName(stopInfo.stpnm);
@@ -72,7 +72,7 @@ const App = () => {
   return (
     <Container>
       <Global styles={globalStyles} />
-      <Title>{stopName}</Title>
+      <Title>{stopName.replace("BOUND STATION", "")}</Title>
       <Estimates>
         {estimates.map((estimate: any, i: number) => (
           <div key={i}>{estimate}</div>
