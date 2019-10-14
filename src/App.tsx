@@ -38,6 +38,11 @@ const Times = styled.p`
   margin-bottom: 1rem;
 `;
 
+const Bus = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const Estimates = styled.div`
   display: flex;
   justify-content: space-around;
@@ -86,7 +91,9 @@ const App = () => {
         {estimates.map((estimate: any, i: number) => (
           <div key={i}>
             <Times>{estimate}</Times>
-            <img src={bus} alt="bus icon"></img>
+            <Bus>
+              <img src={bus} alt="bus icon"></img>
+            </Bus>
           </div>
         ))}
       </Estimates>
