@@ -82,7 +82,7 @@ const App = () => {
   const [stopName, setStopName] = useState("Loading...");
   const [estimates, setEstimates] = useState([]);
   const [route, setRoute] = useState(3504);
-  const [width, height] = useWindowSize();
+  const [width] = useWindowSize();
 
   const changeSocket = (newRoute: any) => {
     setRoute(previousState => {
