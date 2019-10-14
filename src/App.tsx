@@ -3,7 +3,7 @@ import openSocket from "socket.io-client";
 import styled from "@emotion/styled";
 import { Global, css } from "@emotion/core";
 
-const socket = openSocket("http://9195fabe.ngrok.io");
+const socket = openSocket("https://9195fabe.ngrok.io");
 
 const globalStyles = css`
   html,
@@ -78,7 +78,7 @@ const App = () => {
       </Estimates>
       <Select value={route} onChange={(e: any) => changeSocket(e.target.value)}>
         <option value={3504}>Scott's Addition East</option>
-        <option value={3503}>Scott's Addition West</option>
+        <option value={3519}>VCU Medical Center West</option>
       </Select>
     </Container>
   );
