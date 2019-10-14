@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import openSocket from "socket.io-client";
 import styled from "@emotion/styled";
 import { Global, css } from "@emotion/core";
+import bus from "./utils/pulseBus.gif";
 
 const socket = openSocket("https://9195fabe.ngrok.io");
 
 const globalStyles = css`
   html,
   body {
-    height: 80%;
+    height: 100%;
     font-family: helvetica;
+    margin: 0;
   }
   #root {
     height: 100%;
@@ -27,6 +29,13 @@ const Title = styled.h1`
   text-align: center;
   font-size: calc(1rem + 6vw);
   margin: 0;
+`;
+
+const Times = styled.p`
+  text-align: center;
+  margin: 0;
+  font-size: calc(1.5rem + 3vw);
+  margin-bottom: 1rem;
 `;
 
 const Estimates = styled.div`
@@ -75,7 +84,10 @@ const App = () => {
       <Title>{stopName.replace("BOUND STATION", "")}</Title>
       <Estimates>
         {estimates.map((estimate: any, i: number) => (
-          <div key={i}>{estimate}</div>
+          <div key={i}>
+            <Times>{estimate}</Times>
+            <img src={bus} alt="bus icon"></img>
+          </div>
         ))}
       </Estimates>
       <Select value={route} onChange={(e: any) => changeSocket(e.target.value)}>
