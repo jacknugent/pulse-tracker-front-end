@@ -1,10 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import openSocket from "socket.io-client";
 import styled from "@emotion/styled";
 import { Global, css } from "@emotion/core";
 import bus from "./utils/pulseBus.gif";
 
 const socket = openSocket("https://9195fabe.ngrok.io");
+
+const useWindowSize = () => {
+  let [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+  return size;
+};
 
 const globalStyles = css`
   html,
@@ -22,8 +35,7 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  // margin-bottom: 20vh;
+  justify-content: space-around;
 `;
 const Title = styled.h1`
   text-align: center;
@@ -43,10 +55,19 @@ const Bus = styled.div`
   justify-content: center;
 `;
 
+const EstimateContainer = styled.div`
+  @media screen and (max-width: 600px) {
+    margin-bottom: 2rem;
+  }
+`;
+
 const Estimates = styled.div`
   display: flex;
   justify-content: space-around;
   font-size: 7vw;
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const Select = styled.select`
@@ -61,6 +82,7 @@ const App = () => {
   const [stopName, setStopName] = useState("Loading...");
   const [estimates, setEstimates] = useState([]);
   const [route, setRoute] = useState(3504);
+  const [width, height] = useWindowSize();
 
   const changeSocket = (newRoute: any) => {
     setRoute(previousState => {
@@ -89,12 +111,14 @@ const App = () => {
       <Title>{stopName.replace("BOUND STATION", "")}</Title>
       <Estimates>
         {estimates.map((estimate: any, i: number) => (
-          <div key={i}>
+          <EstimateContainer key={i}>
             <Times>{estimate}</Times>
-            <Bus>
-              <img src={bus} alt="bus icon"></img>
-            </Bus>
-          </div>
+            {(i === 0 || width > 600) && (
+              <Bus>
+                <img src={bus} alt="bus icon"></img>
+              </Bus>
+            )}
+          </EstimateContainer>
         ))}
       </Estimates>
       <Select value={route} onChange={(e: any) => changeSocket(e.target.value)}>
