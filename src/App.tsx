@@ -65,7 +65,7 @@ const App = () => {
         setEstimates([]);
       }
     });
-  }, []);
+  });
 
   return (
     <Container>
